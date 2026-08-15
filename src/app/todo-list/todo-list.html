@@ -1,0 +1,60 @@
+<mat-tab-group class="w-3/4 mx-auto" mat-stretch-tabs="false" mat-align-tabs="center" animationDuration="0ms" (selectedTabChange)="filterTAsks($event)">
+
+  <mat-tab [label]="status.All">
+    <ng-container *ngTemplateOutlet="displayedList"></ng-container>
+  </mat-tab>
+
+  <mat-tab [label]="status.ACTIVE">
+    <ng-container *ngTemplateOutlet="displayedList"></ng-container>
+  </mat-tab>
+
+  <mat-tab [label]="status.DONE">
+    <ng-container *ngTemplateOutlet="displayedList"></ng-container>
+  </mat-tab>
+
+</mat-tab-group>
+<div class="flex justify-center gap-10 ">
+    <span><h3>Summary</h3></span>
+  <span>All: {{ allCount() }}</span>
+  <span>Active: {{ activeCount() }}</span>
+  <span>Done: {{ doneCount() }}</span>
+</div>
+<ng-template #displayedList>
+  @for (item of filteredList(); track item.id) {
+
+    <div class="flex items-center mb-3 px-5 py-4 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200">
+
+      <div class="flex-1 text-center text-gray-500 font-medium">
+        {{item.id}}
+      </div>
+
+      <div class="flex-1 text-center font-semibold text-gray-800"
+           [ngClass]="{'line-through text-gray-400':item.status==status.DONE}">
+        {{item.taskName}}
+      </div>
+
+      <div class="flex-1 text-center text-gray-600">
+        {{item.priority}}
+      </div>
+
+      <div class="flex-1 text-center font-medium text-gray-600">
+        {{item.status}}
+      </div>
+
+      <div class="flex-1 text-center">
+        <button (click)="deleteTask(item.id)" class="bg-red-500 hover:bg-red-600 active:bg-red-700 transition-all duration-200 text-white font-semibold py-2 px-5 rounded-lg shadow-sm hover:shadow-md">
+          delete task
+        </button>
+      </div>
+
+      <div class="flex-1 text-center">
+       <button
+  (click)="toggleStatus(item.id)"
+  class="bg-green-500 hover:bg-green-600 active:bg-green-700 transition-all duration-200 text-white font-semibold py-2 px-5 rounded-lg shadow-sm hover:shadow-md">
+  {{ item.status == status.ACTIVE ? 'Mark as Done' : 'Mark as Active' }}
+</button>
+      </div>
+
+    </div>
+  }
+</ng-template>

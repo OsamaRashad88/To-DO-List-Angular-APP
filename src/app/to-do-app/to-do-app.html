@@ -1,0 +1,23 @@
+<h1 class="text-center text-4xl font-bold text-gray-800 mb-3">my to do list</h1>
+<h3 class="text-center text-2xl font-medium text-gray-500 mb-8">add your tasks here</h3>
+<form class="example-form flex justify-between items-center gap-6 w-3/4 mx-auto p-6 mb-10 bg-white rounded-2xl shadow-lg border border-gray-100">
+  <mat-form-field class="flex-1">
+    <mat-label>Task Title</mat-label>
+    <input matInput name="task name" placeholder="enter task name" [(ngModel)]="taskName" (ngModelChange)="taskName">
+  </mat-form-field>
+  <mat-form-field class="flex-1">
+    <mat-label>Select Task Priority </mat-label>
+    <mat-select [(value)]="priority">
+      <mat-option value="Low">Low</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="High">High</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div>
+    <button (click)="addTask()" class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 transition-all duration-200 text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-lg">
+      add task
+    </button>
+  </div>
+</form>
+
+<app-todo-list [List]="allTasksList()" (deleteEvent)="deleteTask($event)" (toggleStatusEvent)="toggleStatus($event)"></app-todo-list>
